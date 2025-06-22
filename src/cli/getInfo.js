@@ -1,6 +1,6 @@
-const ytdl = require('ytdl-core')
+import ytdl from '@distube/ytdl-core'
 
-const getInfo = async (videoId, basic = true) => {
+export const getInfo = async (videoId, basic = true) => {
   if (basic) {
     const info = await ytdl.getBasicInfo(videoId)
 
@@ -11,5 +11,3 @@ const getInfo = async (videoId, basic = true) => {
 
   return info
 }
-
-module.exports = getInfo

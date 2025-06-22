@@ -1,30 +1,34 @@
-const fs = require('fs')
-const path = require('path')
-const readline = require('readline')
+import fs from 'fs'
+import path from 'path'
+import readline from 'readline'
 
-const ytdl = require('ytdl-core')
-const { titleCase } = require('@devnetic/utils')
+import ytdl from '@distube/ytdl-core'
+import { titleCase } from '@devnetic/utils'
 
-const getInfo = require('./getInfo')
-const getUrl = require('./getUrl')
-const convert = require('./convert')
+import { getInfo } from './getInfo.js'
+import { convert } from './convert.js'
 
-const downloadVideo = async (videoId, output = '') => {
-  const info = await getInfo(videoId)
+export const downloadVideo = async (videoId, output = '') => {
+  try {
+    const info = await getInfo(videoId)
+    const videoTitle = titleCase(info.videoDetails.title).replace(/\//g, '-')
+    const downloadPath = path.resolve(path.join(output, `${videoTitle}.mp3`))
 
-  const videoTitle = titleCase(info.videoDetails.title).replace(/\//g, '-')
-  const downloadPath = path.resolve(path.join(output, `${videoTitle}.mp3`))
+    fs.mkdirSync(output, { recursive: true })
 
-  fs.mkdirSync(output, { recursive: true })
+    const stream = ytdl(videoId, { quality: 'highestaudio' })
+      .on('progress', (_, downloaded, total) => {
+        readline.cursorTo(process.stdout, 0)
+        process.stdout.write(`${(downloaded / total * 100).toFixed(2)}% processed`)
+      })
+      .on('error', (err) => {
+        console.error('Error downloading video:', err.message)
+        throw err
+      })
 
-  const stream = ytdl(getUrl(videoId), { quality: 'highestaudio' })
-    .on('progress', (_, downloaded, total) => {
-      readline.cursorTo(process.stdout, 0)
-
-      process.stdout.write(`${(downloaded / total * 100).toFixed(2)}% processed`)
-    })
-
-  convert(stream, downloadPath)
+    await convert(stream, downloadPath)
+  } catch (err) {
+    console.error('Error:', err.message)
+    throw err
+  }
 }
-
-module.exports = downloadVideo

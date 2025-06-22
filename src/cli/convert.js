@@ -1,18 +1,22 @@
-const ffmpegPath = require('ffmpeg-static')
-const ffmpeg = require('fluent-ffmpeg')
+import ffmpegPath from 'ffmpeg-static'
+import ffmpeg from 'fluent-ffmpeg'
 
-const convert = (stream, downloadPath) => {
+export const convert = (stream, downloadPath) => {
   const start = Date.now()
 
-  ffmpeg(stream)
-    .setFfmpegPath(ffmpegPath)
-    .audioBitrate(128)
-    .save(downloadPath)
-    .on('end', () => {
-      process.stdout.write('\n')
-
-      console.log(`Done, time elapsed - ${(Date.now() - start) / 1000}s`)
-    })
+  return new Promise((resolve, reject) => {
+    ffmpeg(stream)
+      .setFfmpegPath(ffmpegPath)
+      .audioBitrate(128)
+      .save(downloadPath)
+      .on('end', () => {
+        process.stdout.write('\n')
+        console.log(`Done, time elapsed - ${(Date.now() - start) / 1000}s`)
+        resolve()
+      })
+      .on('error', (err) => {
+        console.error('Error converting video:', err.message)
+        reject(err)
+      })
+  })
 }
-
-module.exports = convert

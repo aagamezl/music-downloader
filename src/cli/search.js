@@ -1,9 +1,7 @@
-const ytsr = require('ytsr')
+import ytsr from 'ytsr'
 
-const search = async (searchTerm, options = {}) => {
+export const search = async (searchTerm, options = {}) => {
   const result = await ytsr(searchTerm)
 
   return result
 }
-
-module.exports = search
