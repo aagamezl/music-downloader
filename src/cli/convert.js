@@ -1,17 +1,27 @@
 import ffmpegPath from 'ffmpeg-static'
 import ffmpeg from 'fluent-ffmpeg'
 
-export const convert = (stream, downloadPath) => {
+export const convert = (stream, format, downloadPath) => {
   const start = Date.now()
 
   return new Promise((resolve, reject) => {
-    ffmpeg(stream)
-      .setFfmpegPath(ffmpegPath)
-      .audioBitrate(128)
+    const converter = ffmpeg(stream)
+
+    if (format === 'mp3') {
+      converter.audioBitrate(128)
+    }
+
+    if (format === 'flac') {
+      converter.audioCodec('flac')
+        .format('flac')
+    }
+
+    converter.setFfmpegPath(ffmpegPath)
       .save(downloadPath)
       .on('end', () => {
-        process.stdout.write('\n')
-        console.log(`Done, time elapsed - ${(Date.now() - start) / 1000}s`)
+        // process.stdout.write('\n')
+
+        console.log(`Convertion completed, time elapsed - ${(Date.now() - start) / 1000}s`)
         resolve()
       })
       .on('error', (err) => {
