@@ -12,7 +12,8 @@ export const downloadVideo = async (videoId, output = '') => {
   try {
     const info = await getInfo(videoId)
     const videoTitle = titleCase(info.videoDetails.title).replace(/\//g, '-')
-    const downloadPath = path.resolve(path.join(output, `${videoTitle}.mp3`))
+    // const downloadPath = path.resolve(path.join(output, `${videoTitle}.mp3`))
+    const downloadPath = path.resolve(path.join(output, `${videoId}.mp3`))
 
     fs.mkdirSync(output, { recursive: true })
 
@@ -26,7 +27,7 @@ export const downloadVideo = async (videoId, output = '') => {
         throw err
       })
 
-    await convert(stream, downloadPath)
+    await convert(stream, 'mp3', downloadPath)
   } catch (err) {
     console.error('Error:', err.message)
     throw err

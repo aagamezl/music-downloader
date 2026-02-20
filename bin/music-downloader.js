@@ -16,9 +16,9 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 // params.p = 'RDEMjg0J_KBOTJNZiAPRD8iixg'
 // params.p = 'UU_aEa8K-EOJ3D6gOs7HcyNg'
 // params.p = 'PLbRAYIB2Q4mRgSeCAYUYVe18D6KL0yjpS' // Playlist ID
-// params.v = 'hk8ute9PTlY'
-// params.o = 'downloaded'
-// console.log(params)
+params.v = 'mvUqPsxjRwE'
+params.o = 'downloaded'
+console.log(params)
 
 const main = async () => {
   if (params.h || params.help) {
