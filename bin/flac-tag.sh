@@ -41,35 +41,35 @@ EOF
 # ==========================================================
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --root)
-      ROOT="$2"
-      shift 2
-      ;;
-    --dry-run)
-      DRY_RUN=true
-      shift
-      ;;
-    --force)
-      FORCE=true
-      shift
-      ;;
-    --no-cover)
-      EMBED_COVER=false
-      shift
-      ;;
-    --verbose)
-      VERBOSE=true
-      shift
-      ;;
-    --help)
-      usage
-      exit 0
-      ;;
-    *)
-      echo "Unknown option: $1"
-      usage
-      exit 1
-      ;;
+  --root)
+    ROOT="$2"
+    shift 2
+    ;;
+  --dry-run)
+    DRY_RUN=true
+    shift
+    ;;
+  --force)
+    FORCE=true
+    shift
+    ;;
+  --no-cover)
+    EMBED_COVER=false
+    shift
+    ;;
+  --verbose)
+    VERBOSE=true
+    shift
+    ;;
+  --help)
+    usage
+    exit 0
+    ;;
+  *)
+    echo "Unknown option: $1"
+    usage
+    exit 1
+    ;;
   esac
 done
 
@@ -108,11 +108,11 @@ should_skip() {
   fi
 
   [[ "$e_artist" == "$artist" &&
-     "$e_album" == "$album" &&
-     "$e_year" == "$year" &&
-     "$e_track" == "$track" &&
-     "$e_title" == "$title" &&
-     "$e_total" == "$total" ]]
+    "$e_album" == "$album" &&
+    "$e_year" == "$year" &&
+    "$e_track" == "$track" &&
+    "$e_title" == "$title" &&
+    "$e_total" == "$total" ]]
 }
 
 tag_file() {
@@ -147,7 +147,6 @@ tag_file() {
 current_album=""
 
 find "$ROOT" -type f -name "*.flac" | sort | while read -r file; do
-
   filename="$(basename "$file")"
   album_path="$(dirname "$file")"
   album_dir="$(basename "$album_path")"

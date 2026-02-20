@@ -364,3 +364,143 @@ node download-playlist.js \
   --artist "Pereza" \
   --album "Pereza" \
   --year 2001
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lUHZSOaNbghxH30KQrZjfrjrmrZJ62wjA \
+  --artist "Pereza" \
+  --album "Algo para Cantar" \
+  --year 2003
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lRgh9wZtj_2ZuVXKJstGgfnzjkKhFUv-0 \
+  --artist "Pereza" \
+  --album "Animales" \
+  --year 2005
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_naPdJfqPTFpDc6eieBn2QS4OnXD64rlow \
+  --artist "Pereza" \
+  --album "Aproximaciones" \
+  --year 2007
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_kcbd6l9ML2520e5_y7tDI7o2MXqC4Iiv0 \
+  --artist "Pereza" \
+  --album "Aviones" \
+  --year 2009
+
+# ------------------------------------------------------------------------------
+# ItaloBrothers
+# ------------------------------------------------------------------------------
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_k_Ah_8px6Ew7m4zJg-gMwR26ZwSTsk2Qk \
+  --artist "ItaloBrothers" \
+  --album "Stamp" \
+  --year 2010
+
+# ------------------------------------------------------------------------------
+# Flogging Molly
+# ------------------------------------------------------------------------------
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_kaSoYTIj_UuDdTt71qMCIJ8Wm2K-73nKM \
+  --artist "Flogging Molly" \
+  --album "Swagger" \
+  --year 2000
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mB9SHEyLs4wencgb0fQRUAjGnbPYR_NKI \
+  --artist "Flogging Molly" \
+  --album "Drunken Lullabies" \
+  --year 2002
+
+# ------------------------------------------------------------------------------
+# Los Suaves
+# ------------------------------------------------------------------------------
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lSJndJKC5s37ee8wtNgZgqVnkaf37x7lk \
+  --artist "Los Suaves" \
+  --album "Esta vida me va a matar" \
+  --year 1982
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mJdxA5bpHNjnh_RoyFm4w03VSyYjYs8Ho \
+  --artist "Los Suaves" \
+  --album "Frankenstein" \
+  --year 1984
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mmh_eR-4dgcwuqzjuWpn2y73KFdsvWPTU \
+  --artist "Los Suaves" \
+  --album "Ese día piensa en mí" \
+  --year 1988
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_l6sP7PPqhelEO-PZwsk6r5zAhkZMgGLww \
+  --artist "Los Suaves" \
+  --album "Maldita sea mi suerte" \
+  --year 1991
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mnJZsJjegdzkeee1BGFa8reUED_UZMR68 \
+  --artist "Los Suaves" \
+  --album "Malas noticias" \
+  --year 1993
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_m6u4lkX3uSsB6yzd6ysXYyCD6dY44LKA4 \
+  --artist "Los Suaves" \
+  --album "Santa Compaña" \
+  --year 1994
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lYCpeWX3sd3iH5CLC26AqDFQpACp1i-Eo \
+  --artist "Los Suaves" \
+  --album "San Francisco Express" \
+  --year 1997
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_k-tbCXalxJojawtlblsF--4L1IpWqwU_o \
+  --artist "Los Suaves" \
+  --album "Vispera De Todos Los Santos" \
+  --year 2000
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lnz8O0jrOWLNwSXU1NFmDCW1YxvCCn8Uo \
+  --artist "Los Suaves" \
+  --album "Si Yo Fuera Dios" \
+  --year 2003
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_kos9tTQ75PIXFydlbMdV7Pb0vWlBCIRJM \
+  --artist "Los Suaves" \
+  --album "El Jardín De Las Delicias" \
+  --year 2005
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_nk-PYjYTCJ-BvQssxqXbifKSZUBgeFAAg \
+  --artist "Los Suaves" \
+  --album "Adios, Adios" \
+  --year 2010
+
+

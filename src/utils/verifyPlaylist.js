@@ -8,24 +8,27 @@ import { verifyDownloadSong } from './verifyDownloadSong.js'
 import { createSongName } from './createSongName.js'
 import { getPlaylistInfo } from './getPlaylistInfo.js'
 import { sanitizeString, toTitleCase } from './index.js'
+import { DEFAULT_OUTPUT_DIRECTORY } from '../../download-playlist.js'
 
 ffmpeg.setFfmpegPath(ffmpegPath)
 ffmpeg.setFfprobePath(ffprobePath.path)
 
 const TOLERANCE = 2
 
-export const verifyPlaylist = async (dir, { playlist, artist, album, year, format }) => {
-  // console.log('Verifying playlist...')
-  // console.log('Dir:', dir)
-  // console.log('Options:', { playlist, artist, album, year })
-
+export const verifyPlaylist = async ({
+  playlist,
+  artist,
+  album,
+  year,
+  format,
+  output = DEFAULT_OUTPUT_DIRECTORY
+}) => {
   const playlistInfo = await getPlaylistInfo({ playlist, artist, album, year })
 
   const invalidSongs = []
   let index = 1
   for (const song of playlistInfo) {
-    // console.log('Song:', song)
-    const albumDirectory = join(dir, sanitizeString(toTitleCase(artist)), `${year} - ${sanitizeString(toTitleCase(album))}`)
+    const albumDirectory = join(output, sanitizeString(toTitleCase(artist)), `${year} - ${sanitizeString(toTitleCase(album))}`)
     const songName = createSongName(sanitizeString(toTitleCase(song.title)), index, format)
     const outputFile = join(albumDirectory, songName)
 

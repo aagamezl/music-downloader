@@ -5,7 +5,7 @@ import {
   rmSync
 } from 'node:fs'
 import { join } from 'node:path'
-import { parseArgs } from 'node:util'
+import { parseArgs, styleText } from 'node:util'
 
 import { Innertube, Platform } from 'youtubei.js';
 
@@ -18,9 +18,7 @@ import {
 } from './src/utils/index.js';
 
 const DOWNLOAD_DELAY = 10_000;  // 10 seconds
-const OUTPUT_DIRECTORY = `./downloaded`;
-
-// const streamPipeline = promisify(pipeline)
+export const DEFAULT_OUTPUT_DIRECTORY = `./downloads`;
 
 Platform.shim.eval = async (data, env) => {
   const properties = [];
@@ -51,41 +49,43 @@ const downloadPlaylist = async ({
   playlist,
   artist,
   album,
-  year
+  year,
+  output = DEFAULT_OUTPUT_DIRECTORY
 }) => {
   if (!playlist) {
     throw new Error('Playlist ID is required')
   }
 
-  console.log(`Fetching playlist info for: ${playlist}\n`)
+  console.log(styleText('cyan', `Fetching playlist info for: ${playlist}\n`))
   const innertube = await Innertube.create({
     // generate_session_locally: true
     client_type: 'ANDROID'
   });
 
-  if (!existsSync(OUTPUT_DIRECTORY)) {
-    mkdirSync(OUTPUT_DIRECTORY);
+  if (!existsSync(output)) {
+    mkdirSync(output);
   }
 
   const result = await innertube.music.getPlaylist(playlist)
-  artist = sanitizeString(toTitleCase(artist))
-  album = sanitizeString(toTitleCase(album))
+  artist = toTitleCase(sanitizeString(artist))
+  album = toTitleCase(sanitizeString(album))
 
   let index = 1
   let total = result.contents.length
   for (const song of result.contents) {
     if (!song.id) {
-      console.log(`Skipping song without ID: ${song.title}`)
+      console.log(styleText('red', 'Skipping song without ID:'), song.title)
+
       continue
     }
 
-    const title = sanitizeString(toTitleCase(song.title))
-    const tempFile = join(OUTPUT_DIRECTORY, `${song.id}.m4a`)
-    const albumDirectory = join(OUTPUT_DIRECTORY, artist, `${year} - ${album}`)
+    const title = toTitleCase(sanitizeString(song.title))
+    const tempFile = join(output, `${song.id}.m4a`)
+    const albumDirectory = join(output, artist, `${year} - ${album}`)
     const songName = createSongName(title, index, format)
     const outputFile = join(albumDirectory, songName)
 
-    console.log(`[${index}/${total}] Downloading - ${title}`)
+    console.log(`${styleText('yellow', `[${index}/${total}]`)} Downloading - ${title}`)
 
     const stream = await innertube.download(song.id, {
       type: 'video+audio',
@@ -109,7 +109,7 @@ const downloadPlaylist = async ({
     rmSync(tempFile)
 
 
-    console.log(`\nWaiting ${DOWNLOAD_DELAY / 1000} seconds to start next download...\n`)
+    console.log(styleText('cyan', `\nWaiting ${DOWNLOAD_DELAY / 1000} seconds to start next download...\n`))
 
     await wait(DOWNLOAD_DELAY)
 
@@ -119,6 +119,10 @@ const downloadPlaylist = async ({
 
 const main = async () => {
   const options = {
+    output: {
+      type: 'string',
+      short: 'o',
+    },
     format: {
       type: 'string',
       short: 'f',
@@ -151,27 +155,28 @@ const main = async () => {
   // values.album = 'Estopía'
   // values.year = '2024'
 
-  console.log('\nDownloading playlist...');
+  console.log(styleText('cyan', '\nDownloading playlist...'));
 
   await downloadPlaylist(values)
 
-  console.log('Playlist download complete')
+  console.log(styleText('green', 'Playlist download complete'))
 
-  console.log('---------------------------------------------------------------')
+  console.log(styleText('cyan', '---------------------------------------------------------------'))
 
-  console.log('\nVerifying playlist...')
+  console.log(styleText('cyan', '\nVerifying playlist...'))
 
-  const invalidSongs = await verifyPlaylist(OUTPUT_DIRECTORY, values)
+  const invalidSongs = await verifyPlaylist(values)
 
   if (invalidSongs.length > 0) {
     for (const song of invalidSongs) {
-      console.log(`Song ${song.id}: ${song.title} is not valid`)
-      console.log(`Expected duration: ${song.duration.seconds}, downloaded duration: ${song.downloadedDuration}`)
+      console.log(styleText('red', `Song ${song.id}: ${song.title} is not valid`))
+      console.log(styleText('red', `Expected duration: ${song.duration.seconds}, downloaded duration: ${song.downloadedDuration}`))
     }
+
     process.exit(1)
   }
 
-  console.log('Playlist verification complete, all songs are valid')
+  console.log(styleText('green', 'Playlist verification complete, all songs are valid'))
 }
 
 main().catch(err => {
