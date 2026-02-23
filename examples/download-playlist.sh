@@ -404,6 +404,36 @@ node download-playlist.js \
   --album "Stamp" \
   --year 2010
 
+node download-video.js \
+  --format flac \
+  --video cHcVU5cGUNE \
+  --artist "Italobrothers" \
+  --title "Stamp On The Ground"
+
+node download-video.js \
+  --format flac \
+  --video y9Qn96NSkzg \
+  --artist "Italobrothers" \
+  --title "Down For The Ride"
+
+node download-video.js \
+  --format flac \
+  --video yuaZVEgkFmg \
+  --artist "Italobrothers" \
+  --title "My Life Is A Party"
+
+node download-video.js \
+  --format flac \
+  --video 6MReeYAcEUM \
+  --artist "Italobrothers" \
+  --title "Sleep When We're Dead"
+
+node download-video.js \
+  --format flac \
+  --video vJQw88b7z0E \
+  --artist "Italobrothers" \
+  --title "Stay"
+
 # ------------------------------------------------------------------------------
 # Flogging Molly
 # ------------------------------------------------------------------------------
@@ -502,5 +532,3 @@ node download-playlist.js \
   --artist "Los Suaves" \
   --album "Adios, Adios" \
   --year 2010
-
-

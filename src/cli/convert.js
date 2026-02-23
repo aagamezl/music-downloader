@@ -19,9 +19,10 @@ export const convert = (stream, format, downloadPath) => {
     converter.setFfmpegPath(ffmpegPath)
       .save(downloadPath)
       .on('end', () => {
-        // process.stdout.write('\n')
+        process.stdout.write('\n')
 
         console.log(`Convertion completed, time elapsed - ${(Date.now() - start) / 1000}s`)
+
         resolve()
       })
       .on('error', (err) => {

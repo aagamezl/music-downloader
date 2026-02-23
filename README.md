@@ -17,12 +17,14 @@ If your IP gets banned, you may see errors like "Too many requests" or videos fa
 ## Features
 
 - Download entire YouTube playlists as high-quality audio
+- Download individual YouTube videos as audio files
 - Support for multiple audio formats (MP3, FLAC, etc.)
 - Automatic metadata tagging (artist, album, year, track numbers)
 - Spanish character preservation (ñ, Ñ, á, é, í, ó, ú, ü)
 - Filesystem-safe filename sanitization
 - Built-in download delays to prevent IP banning
 - Playlist verification after download
+- Auto-fetch video titles when not provided
 
 ## Installation
 
@@ -45,13 +47,27 @@ npm install
 node download-playlist.js --playlist PLAYLIST_ID --artist "Artist Name" --album "Album Name" --year 2024
 ```
 
+### Single Video Download
+
+```bash
+node download-video.js --video VIDEO_ID --title "Video Title" --format flac
+```
+
 ### Command Line Options
 
+**Playlist Download (`download-playlist.js`):**
 - `-p, --playlist <id>`: YouTube playlist ID (required)
 - `-a, --artist <name>`: Artist name for metadata (required)
 - `-b, --album <name>`: Album name for metadata (required)
 - `-y, --year <year>`: Album year for metadata (required)
-- `-f, --format <format>`: Audio format (default: mp3, options: mp3, flac, etc.)
+- `-f, --format <format>`: Audio format (required, options: mp3, flac, etc.)
+- `-o, --output <directory>`: Output directory (default: ./downloads)
+
+**Single Video Download (`download-video.js`):**
+- `-v, --video <id>`: YouTube video ID (required)
+- `-a, --artist <name>`: Artist name for filename (required)
+- `-t, --title <name>`: Video title for filename (required)
+- `-f, --format <format>`: Audio format (required, options: mp3, flac, etc.)
 - `-o, --output <directory>`: Output directory (default: ./downloads)
 
 ### FLAC Metadata Tagging
@@ -105,6 +121,7 @@ downloads/
 ### Examples
 
 #### Download a FLAC album:
+
 ```bash
 node download-playlist.js \
   --playlist OLAK5uy_kIVFX1tkjBnGwrosyyuAcBKn85SRilCT0 \
@@ -114,7 +131,27 @@ node download-playlist.js \
   --format flac
 ```
 
+#### Download a single video:
+
+```bash
+node download-video.js \
+  --video cHcVU5cGUNE \
+  --title "Stamp On The Ground" \
+  --format flac
+```
+
+#### Download single video with auto-fetched title:
+
+```bash
+node download-video.js \
+  --format flac \
+  --video yuaZVEgkFmg \
+  --artist "Italobrothers" \
+  --title "My Life Is A Party"
+```
+
 #### Download to custom directory:
+
 ```bash
 node download-playlist.js \
   --playlist PLK-SXHR04gppC3Kp0b9ck1D5RDKx3_q3I \
@@ -125,7 +162,17 @@ node download-playlist.js \
   --output ./my-music
 ```
 
+```bash
+node download-video.js \
+  --format flac \
+  --video yuaZVEgkFmg \
+  --artist "Italobrothers" \
+  --title "My Life Is A Party"
+  --output ./my-music
+```
+
 #### Download MP3 format:
+
 ```bash
 node download-playlist.js \
   --playlist OLAK5uy_l2PdJzx6eoU9JiVqs9u1GPgvNdj1FK1SY \
@@ -141,15 +188,29 @@ YouTube playlist IDs can be found in the URL:
 - `https://music.youtube.com/playlist?list=OLAK5uy_kIVFX1tkjBnGwrosyyuAcBKn85SRilCT0`
 - The playlist ID is: `OLAK5uy_kIVFX1tkjBnGwrosyyuAcBKn85SRilCT0`
 
+## Finding Video IDs
+
+YouTube video IDs can be found in the URL:
+- `https://www.youtube.com/watch?v=cHcVU5cGUNE`
+- `https://music.youtube.com/watch?v=cHcVU5cGUNE`
+- The video ID is: `cHcVU5cGUNE`
+
 ## Download Process
 
+### Playlist Downloads:
 1. **Initialization**: Connects to YouTube and validates the playlist
 2. **Sequential Download**: Downloads each video with 10-second delays
 3. **Audio Conversion**: Converts video to selected audio format
 4. **Metadata Tagging**: Adds artist, album, year, and track information
 5. **Verification**: Checks all files were downloaded successfully
 
-## File Organization
+### Single Video Downloads:
+1. **Video Info**: Fetches video information and title (if not provided)
+2. **Download**: Downloads the video as audio
+3. **Conversion**: Converts to selected audio format
+4. **Sanitization**: Applies filename sanitization and Spanish character preservation
+
+## File Organization For Playlists
 
 Downloaded files are organized as:
 ```
@@ -159,6 +220,16 @@ downloads/
 │   │   ├── 01 - Song Title.flac
 │   │   ├── 02 - Another Song.flac
 │   │   └── ...
+```
+
+## File Organization For Single Videos
+
+Single video downloads are saved directly to the output directory:
+```
+downloads/
+├── Artist Name - Song Title.flac
+├── Artist Name - Another Song Title.mp3
+└── ...
 ```
 
 ## Spanish Character Support
