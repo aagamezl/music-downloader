@@ -1,4 +1,5 @@
 import { join } from 'node:path'
+import { styleText } from 'node:util'
 
 import ffmpegPath from 'ffmpeg-static'
 import ffprobePath from 'ffprobe-static'
@@ -28,16 +29,23 @@ export const verifyPlaylist = async ({
   const invalidSongs = []
   let index = 1
   for (const song of playlistInfo) {
-    const albumDirectory = join(output, sanitizeString(toTitleCase(artist)), `${year} - ${sanitizeString(toTitleCase(album))}`)
-    const songName = createSongName(sanitizeString(toTitleCase(song.title)), index, format)
+    artist = toTitleCase(sanitizeString(artist))
+    album = toTitleCase(sanitizeString(album))
+    const title = toTitleCase(sanitizeString(song.title))
+    const albumDirectory = join(output, artist, `${year} - ${album}`)
+    const songName = createSongName(title, index, format)
     const outputFile = join(albumDirectory, songName)
+
+    // const albumDirectory = join(output, sanitizeString(toTitleCase(artist)), `${year} - ${sanitizeString(toTitleCase(album))}`)
+    // const songName = createSongName(sanitizeString(toTitleCase(song.title)), index, format)
+    // const outputFile = join(albumDirectory, songName)
 
     const duration = await getDuration(outputFile)
 
     if (!verifyDownloadSong(song, duration, TOLERANCE)) {
-      console.log(`Song ${song.id} is not valid`)
-      console.log(`Expected duration: ${song.duration.seconds}, actual duration: ${duration}`)
-      console.log('----------------------------------------')
+      console.log(styleText('red', `Song ${song.id} is not valid`))
+      console.log(styleText('red', `Expected duration: ${song.duration.seconds}, actual duration: ${duration}`))
+      console.log(styleText('red', '----------------------------------------'))
 
       song.downloadedDuration = duration
       invalidSongs.push(song)

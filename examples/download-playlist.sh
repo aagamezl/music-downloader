@@ -532,3 +532,110 @@ node download-playlist.js \
   --artist "Los Suaves" \
   --album "Adios, Adios" \
   --year 2010
+
+# ------------------------------------------------------------------------------
+# Blink-182
+# ------------------------------------------------------------------------------
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lCIFSnyO2sRmcCVoP0dhzjUtsBPYunu7w \
+  --artist "Blink-182" \
+  --album "Buddha - Remastered" \
+  --year 1998
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mGaJCGv6CnM9SEOyGmRU-q8I7TWoeocyY \
+  --artist "Blink-182" \
+  --album "Cheshire Cat" \
+  --year 1995
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_nM-rLMtCaUFIsWtEHKZ_eyKqSRblGSWp4 \
+  --artist "Blink-182" \
+  --album "Dude Ranch" \
+  --year 1997
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_ku1eCIHSQXftkjdy1pDCmCHYLyHza-agY \
+  --artist "Blink-182" \
+  --album "Enema Of The State" \
+  --year 1999
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_nJ0Ei8vGJNbOm_YA26V5dOT6z3sJdX7Dc \
+  --artist "Blink-182" \
+  --album "Take Off Your Pants And Jacket" \
+  --year 2001
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_m9aSGGTzbIQUyl9to6su-V7XOeFvNVsoE \
+  --artist "Blink-182" \
+  --album "Blink-182" \
+  --year 2003
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mBSS4R6ba1R_wX4dwdgUnaBLz2uFZHOCo \
+  --artist "Blink-182" \
+  --album "Neighborhoods (Deluxe Explicit Version)" \
+  --year 2011
+
+node download-video.js \
+  --format flac \
+  --video jAs1kFX2bHI \
+  --artist "Blink-182" \
+  --title "06 - Heart's All Gone Interlude"
+
+node download-video.js \
+  --format flac \
+  --video bA7yT8uBa0Q \
+  --artist "Blink-182" \
+  --title "12 - Love Is Dangerous" \
+  --output "./downloads/Blink-182/2011 - Neighborhoods (Deluxe Explicit Version)"
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_nF0041WvQEXt-PKmViy2LsPw5RUbIKJOg \
+  --artist "Blink-182" \
+  --album "California" \
+  --year 2016
+
+node download-video.js \
+  --format flac \
+  --video Fof6vYITQ3w \
+  --artist "Blink-182" \
+  --title "05 - Sober"
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_kFuTlXi9J6jGFaypXnCHapx8chRUhCcOE \
+  --artist "Blink-182" \
+  --album "NINE" \
+  --year 2019
+
+node download-video.js \
+  --format flac \
+  --video 4cbSPNZryzo \
+  --artist "Blink-182" \
+  --title "04 - Darkside (Official Video)" \
+  --output "./downloads/Blink-182/2019 - NINE"
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_lpL3pr6vrIl8e63VGBnaZacP7VBGGLsA8 \
+  --artist "Blink-182" \
+  --album "ONE MORE TIME..." \
+  --year 2023
+
+node download-video.js \
+  --format flac \
+  --video 2cr0yYD9FtM \
+  --artist "Blink-182" \
+  --title "15 - FUCK FACE" \
+  --output "./downloads/Blink-182/2023 - One More Time"
