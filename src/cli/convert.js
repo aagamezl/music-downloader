@@ -1,11 +1,14 @@
 import ffmpegPath from 'ffmpeg-static'
 import ffmpeg from 'fluent-ffmpeg'
 
-export const convert = (stream, format, downloadPath) => {
+export const convert = ({ stream, format, targetLoudness, downloadPath }) => {
   const start = Date.now()
 
   return new Promise((resolve, reject) => {
     const converter = ffmpeg(stream)
+      .audioFilters([
+        `loudnorm=I=${targetLoudness}:LRA=7:tp=-2`
+      ])
 
     if (format === 'mp3') {
       converter.audioBitrate(128)

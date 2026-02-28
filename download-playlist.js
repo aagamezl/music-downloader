@@ -18,6 +18,7 @@ import {
 } from './src/utils/index.js';
 
 const DOWNLOAD_DELAY = 10_000;  // 10 seconds
+const TARGET_LOUDNESS = -24
 export const DEFAULT_OUTPUT_DIRECTORY = `./downloads`;
 
 Platform.shim.eval = async (data, env) => {
@@ -104,10 +105,14 @@ const downloadPlaylist = async ({
       mkdirSync(albumDirectory, { recursive: true });
     }
 
-    await convert(tempFile, format, outputFile)
+    await convert({
+      stream: tempFile,
+      format,
+      targetLoudness: TARGET_LOUDNESS,
+      downloadPath: outputFile
+    })
 
     rmSync(tempFile)
-
 
     console.log(styleText('cyan', `\nWaiting ${DOWNLOAD_DELAY / 1000} seconds to start next download...\n`))
 

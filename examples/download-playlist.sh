@@ -532,3 +532,21 @@ node download-playlist.js \
   --artist "Los Suaves" \
   --album "Adios, Adios" \
   --year 2010
+
+# ------------------------------------------------------------------------------
+# Avril Lavigne
+# ------------------------------------------------------------------------------
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_kFOSQWseq5wpgCXyLIdXL8SUuDf--kRok \
+  --artist "Avril Lavigne" \
+  --album "Let Go" \
+  --year 2002
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mHEO-MzcBOdiTdVFbcElVZ7D6zYql2_gs \
+  --artist "Avril Lavigne" \
+  --album "Under My Skin" \
+  --year 2004
