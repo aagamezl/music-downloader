@@ -1,3 +1,5 @@
+import { styleText } from 'node:util'
+
 import ffmpegPath from 'ffmpeg-static'
 import ffmpeg from 'fluent-ffmpeg'
 
@@ -21,12 +23,12 @@ export const convert = (stream, format, downloadPath) => {
       .on('end', () => {
         process.stdout.write('\n')
 
-        console.log(`Convertion completed, time elapsed - ${(Date.now() - start) / 1000}s`)
+        console.log(styleText('green', `Convertion completed, time elapsed - ${(Date.now() - start) / 1000}s`))
 
         resolve()
       })
       .on('error', (err) => {
-        console.error('Error converting video:', err.message)
+        console.error(styleText('red', 'Error converting video:'), err.message)
         reject(err)
       })
   })

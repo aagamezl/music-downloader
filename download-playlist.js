@@ -58,15 +58,31 @@ const downloadPlaylist = async ({
 
   console.log(styleText('cyan', `Fetching playlist info for: ${playlist}\n`))
   const innertube = await Innertube.create({
-    // generate_session_locally: true
-    client_type: 'ANDROID'
+    generate_session_locally: true,
+    client_type: 'ANDROID',
+    retrieve_player: false
   });
 
   if (!existsSync(output)) {
     mkdirSync(output);
   }
 
-  const result = await innertube.music.getPlaylist(playlist)
+  let result;
+  try {
+    result = await innertube.music.getPlaylist(playlist)
+  } catch (error) {
+    if (error.info?.error_type === 'LOGIN_REQUIRED') {
+      console.error(styleText('red', '\n❌ YouTube now requires authentication for downloads.'))
+      console.error(styleText('yellow', 'This may be due to recent YouTube policy changes.'))
+      console.error(styleText('cyan', 'Possible solutions:'))
+      console.error(styleText('white', '1. Try again later (temporary restrictions)'))
+      console.error(styleText('white', '2. Use a VPN to change IP address'))
+      console.error(styleText('white', '3. Update youtubei.js to latest version'))
+      // process.exit(1)
+    }
+    // throw error;
+  }
+
   artist = toTitleCase(sanitizeString(artist))
   album = toTitleCase(sanitizeString(album))
 
@@ -87,10 +103,33 @@ const downloadPlaylist = async ({
 
     console.log(`${styleText('yellow', `[${index}/${total}]`)} Downloading - ${title}`)
 
-    const stream = await innertube.download(song.id, {
-      type: 'video+audio',
-      // quality: 'best'
-    });
+    const RETRY_LIMIT = 3;
+    let stream;
+    // while (!stream && retryCount < RETRY_LIMIT) {
+    for (let retryCount = 0; retryCount < RETRY_LIMIT; retryCount++) {
+      try {
+        stream = await innertube.download(song.id, {
+          type: 'video+audio',
+          quality: 'best'
+        });
+
+        break;
+      } catch (error) {
+        console.error(styleText('red', `Failed to download ${title} (attempt ${retryCount + 1}/${RETRY_LIMIT}): ${error.message}`))
+      }
+
+      console.log(styleText('yellow', `\nWaiting ${DOWNLOAD_DELAY / 1000} seconds to start next download...\n`))
+
+      await wait(DOWNLOAD_DELAY);
+    }
+
+    if (!stream) {
+      console.error(styleText('red', `Failed to download ${title} after ${RETRY_LIMIT} attempts`))
+
+      index++
+
+      continue
+    }
 
     const file = createWriteStream(tempFile);
 
@@ -108,8 +147,7 @@ const downloadPlaylist = async ({
 
     rmSync(tempFile)
 
-
-    console.log(styleText('cyan', `\nWaiting ${DOWNLOAD_DELAY / 1000} seconds to start next download...\n`))
+    console.log(styleText('yellow', `\nWaiting ${DOWNLOAD_DELAY / 1000} seconds to start next download...\n`))
 
     await wait(DOWNLOAD_DELAY)
 
@@ -183,4 +221,5 @@ main().catch(err => {
   console.error(err)
   process.exit(1)
 })
+
 
