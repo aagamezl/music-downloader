@@ -6,7 +6,11 @@ export const getPlaylistInfo = async ({
   album,
   year
 }) => {
-  const innertube = await Innertube.create({ generate_session_locally: true });
+  const innertube = await Innertube.create({
+    generate_session_locally: true,
+    client_type: 'ANDROID',
+    retrieve_player: false
+  });
   const result = await innertube.music.getPlaylist(playlist)
 
   const playlistInfo = result.contents.reduce((info, song) => {
