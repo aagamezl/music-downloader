@@ -639,3 +639,21 @@ node download-video.js \
   --artist "Blink-182" \
   --title "15 - FUCK FACE" \
   --output "./downloads/Blink-182/2023 - One More Time"
+  
+# ------------------------------------------------------------------------------
+# Avril Lavigne
+# ------------------------------------------------------------------------------
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_kFOSQWseq5wpgCXyLIdXL8SUuDf--kRok \
+  --artist "Avril Lavigne" \
+  --album "Let Go" \
+  --year 2002
+
+node download-playlist.js \
+  --format flac \
+  --playlist OLAK5uy_mHEO-MzcBOdiTdVFbcElVZ7D6zYql2_gs \
+  --artist "Avril Lavigne" \
+  --album "Under My Skin" \
+  --year 2004
